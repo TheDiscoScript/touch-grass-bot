@@ -2,6 +2,8 @@ import { Client, TextChannel } from 'discord.js';
 import { log } from '../utils';
 import dotenv from 'dotenv';
 
+dotenv.config();
+
 export async function sendReport(client: Client, report: string) {
     const channel = client.channels.cache.get(process.env.REPORT_CHANNEL_ID!) as TextChannel;
     if (channel) {
