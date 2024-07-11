@@ -7,9 +7,10 @@ import { Client } from 'discord.js';
 export function setupCronJobs(client: Client) {
     cron.schedule('0 0 1 * *', async () => {
         log('Cron job started: Start of the first day of the month');
-        // Add your specific task here
+
         await announcePastMonthResults(client);
         await resetMonthlyData();
+
         log('Cron job ended: Start of the first day of the month');
     });
 }
