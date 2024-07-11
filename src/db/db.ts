@@ -35,3 +35,21 @@ export async function insertUser(user: DiscordUserEntity): Promise<void> {
 export async function updateUserTime(userId: string): Promise<void> {
     await getDiscordUserCollection().updateOne({ userId }, { $inc: { thisMonthMinutes: 1, totalMinutes: 1 } });
 }
+
+export async function resetMonthlyDataForAll(): Promise<void> {
+    await getDiscordUserCollection().updateMany({}, { $set: { thisMonthMinutes: 0 } });
+}
+export async function getAllUsers(): Promise<Omit<DiscordUserEntity, 'userId' | 'id'>[]> {
+    return await getDiscordUserCollection()
+        .find(
+            {},
+            {
+                projection: {
+                    userName: 1,
+                    thisMonthMinutes: 1,
+                    totalMinutes: 1,
+                },
+            },
+        )
+        .toArray();
+}

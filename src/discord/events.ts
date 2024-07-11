@@ -1,7 +1,7 @@
 import { Client, VoiceState } from 'discord.js';
-import { findUser, insertUser, updateUserTime } from './db';
+import { findUser, insertUser, updateUserTime } from '../db/db';
 import crypto from 'crypto';
-import { log } from './utils';
+import { log } from '../utils';
 
 const usersInVoiceChannels = new Set<string>();
 
