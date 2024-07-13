@@ -1,11 +1,8 @@
 import { Client, TextChannel } from 'discord.js';
 import { log } from '../utils';
-import dotenv from 'dotenv';
 
-dotenv.config();
-
-export async function sendReport(client: Client, report: string) {
-    const channel = client.channels.cache.get(process.env.REPORT_CHANNEL_ID!) as TextChannel;
+export async function sendReport(client: Client, report: string, channelId: string) {
+    const channel = client.channels.cache.get(channelId) as TextChannel;
     if (channel) {
         await channel.send(report);
         log('Monthly report sent');

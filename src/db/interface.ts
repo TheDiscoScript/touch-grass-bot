@@ -4,4 +4,5 @@ export interface DiscordUserEntity {
     id: string;
     totalMinutes: number;
     thisMonthMinutes: number;
+    thisWeekMinutes: number;
 }

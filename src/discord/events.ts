@@ -24,6 +24,7 @@ export function setupEvents(client: Client) {
                     id: crypto.randomBytes(16).toString('hex'),
                     totalMinutes: 0,
                     thisMonthMinutes: 0,
+                    thisWeekMinutes: 0,
                 };
                 await insertUser(user);
                 console.log(`Account created for ${newState.member!.user.tag}`);
@@ -53,7 +54,7 @@ async function updateUserTimes() {
             const user = await findUser(userId);
             if (user) {
                 log(
-                    `Updated time for ${user.userName}: ${user.thisMonthMinutes + 1} minutes this month, ${user.totalMinutes + 1} minutes total.`,
+                    `Updated time for ${user.userName}: ${user.thisMonthMinutes + 1} minutes this month, ${user.totalMinutes + 1} minutes total., ${user.thisWeekMinutes + 1} minutes this week`,
                 );
             }
         }
