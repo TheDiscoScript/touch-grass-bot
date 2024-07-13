@@ -39,7 +39,9 @@ async function announcePastMonthResults(client: Client) {
 
     let report = 'Monthly Voice Channel Usage:\n';
     users.forEach((user) => {
-        report += `${user.userName}: ${user.thisMonthMinutes} minutes\n`;
+        const hours = Math.floor(user.thisWeekMinutes / 60);
+        const minutes = user.thisWeekMinutes % 60;
+        report += `${user.userName}: ${user.thisMonthMinutes} minutes  = ${hours}:${minutes} (hours:minutes)\n`;
     });
 
     await sendReport(client, report, channelId!);
@@ -57,7 +59,9 @@ async function announcePastWeekResults(client: Client) {
 
     let report = 'Weekly Voice Channel Usage:\n';
     users.forEach((user) => {
-        report += `${user.userName}: ${user.thisWeekMinutes} minutes\n`;
+        const hours = Math.floor(user.thisWeekMinutes / 60);
+        const minutes = user.thisWeekMinutes % 60;
+        report += `${user.userName}: ${user.thisWeekMinutes} minutes = ${hours}:${minutes} (hours:minutes)\n`;
     });
 
     await sendReport(client, report, channelId!);
