@@ -47,18 +47,27 @@ export async function resetWeeklyDataForAll(): Promise<void> {
     await getDiscordUserCollection().updateMany({}, { $set: { thisWeekMinutes: 0 } });
 }
 
-export async function getAllUsers(): Promise<Omit<DiscordUserEntity, 'userId' | 'id'>[]> {
+export async function getAllActiveUsers(queryObject?: {
+    isWeekly?: boolean;
+    isMonthly?: boolean;
+}): Promise<Omit<DiscordUserEntity, 'userId' | 'id'>[]> {
+    let query;
+    if (queryObject?.isWeekly) {
+        query = { thisWeekMinutes: { $gt: 0 } };
+    } else if (queryObject?.isMonthly) {
+        query = { thisMonthMinutes: { $gt: 0 } };
+    } else {
+        query = {};
+    }
+
     return await getDiscordUserCollection()
-        .find(
-            {},
-            {
-                projection: {
-                    userName: 1,
-                    thisMonthMinutes: 1,
-                    thisWeekMinutes: 1,
-                    totalMinutes: 1,
-                },
+        .find(query, {
+            projection: {
+                userName: 1,
+                thisMonthMinutes: 1,
+                thisWeekMinutes: 1,
+                totalMinutes: 1,
             },
-        )
+        })
         .toArray();
 }

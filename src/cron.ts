@@ -1,6 +1,6 @@
 import cron from 'node-cron';
 import { log } from './utils';
-import { getAllUsers, resetMonthlyDataForAll, resetWeeklyDataForAll } from './db/db';
+import { getAllActiveUsers, resetMonthlyDataForAll, resetWeeklyDataForAll } from './db/db';
 import { sendReport } from './discord/actions';
 import { Client } from 'discord.js';
 import dotenv from 'dotenv';
@@ -32,7 +32,7 @@ export function setupCronJobs(client: Client) {
 async function announcePastMonthResults(client: Client) {
     const channelId = process.env.REPORT_CHANNEL_ID;
     log('Announcing past month results');
-    const users = await getAllUsers();
+    const users = await getAllActiveUsers({ isMonthly: true });
 
     //descending order
     users.sort((a, b) => b.thisMonthMinutes - a.thisMonthMinutes);
@@ -52,7 +52,7 @@ async function announcePastWeekResults(client: Client) {
     const channelId = process.env.REPORT_CHANNEL_WEEKLY_ID;
 
     log('Announcing past week results');
-    const users = await getAllUsers();
+    const users = await getAllActiveUsers({ isWeekly: true });
 
     //descending order
     users.sort((a, b) => b.thisWeekMinutes - a.thisWeekMinutes);
