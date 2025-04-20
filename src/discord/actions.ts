@@ -5,7 +5,7 @@ export async function sendReport(client: Client, report: string, channelId: stri
     const channel = client.channels.cache.get(channelId) as TextChannel;
     if (channel) {
         await channel.send(report);
-        log('Monthly report sent');
+        log('Report sent');
     } else {
         log('Report channel not found');
     }

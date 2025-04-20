@@ -1,5 +1,5 @@
 import cron from 'node-cron';
-import { log } from './utils';
+import { debug, log } from './utils';
 import { getAllActiveUsers, resetMonthlyDataForAll, resetWeeklyDataForAll } from './db/db';
 import { sendReport } from './discord/actions';
 import { Client } from 'discord.js';
@@ -9,14 +9,14 @@ dotenv.config();
 
 export function setupCronJobs(client: Client) {
     //monthly
-    cron.schedule('0 0 1 * *', async () => {
-        log('Cron job started: Start of the first day of the month');
-
-        await announcePastMonthResults(client);
-        await resetMonthlyData();
-
-        log('Cron job ended: Start of the first day of the month');
-    });
+    // cron.schedule('0 0 1 * *', async () => {
+    //     log('Cron job started: Start of the first day of the month');
+    //
+    //     await announcePastMonthResults(client);
+    //     await resetMonthlyData();
+    //
+    //     log('Cron job ended: Start of the first day of the month');
+    // });
 
     //weekly
     cron.schedule('0 0 * * 1', async () => {
